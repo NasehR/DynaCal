@@ -1,3 +1,3 @@
 rootProject.name = "dynacal"
-include ':lib', ':application', ':api', ':calplugins-repeat'
+include ':lib', ':application', ':api', ':calplugins-repeat', ':calplugins-notify'
 
