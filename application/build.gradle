@@ -9,6 +9,7 @@ repositories {
 dependencies {
     implementation project (':lib')
     implementation project (':api')
+    implementation project (':calplugins-repeat')
 }
 
 application {
