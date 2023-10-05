@@ -1,3 +1,3 @@
 rootProject.name = "dynacal"
-include(":lib")
+include("lib")
 
