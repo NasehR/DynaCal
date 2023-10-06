@@ -1,7 +1,21 @@
 plugins {
+    id 'java'
     id 'java-library'
+    id 'pmd'
 }
 
 repositories {
     mavenCentral()
+}
+
+compileJava {
+    options.compilerArgs << "-Xlint:all,-serial"
+}
+
+pmd {
+    consoleOutput = true
+    toolVersion = '6.55.0'
+    rulesMinimumPriority = 5
+    ruleSets = []
+    ruleSetFiles = files('saed-pmd-rules.xml')
 }
