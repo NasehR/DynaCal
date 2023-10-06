@@ -15,5 +15,9 @@ public class Main {
         api.print();
         repeat.print();
         notify.print();
+
+        for (String arg: args) {
+            System.out.println(arg);
+        }
     }
 }
