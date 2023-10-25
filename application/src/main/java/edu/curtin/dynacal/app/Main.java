@@ -28,26 +28,20 @@ public class Main {
             System.out.println(arg);
         }
 
-
-
-
-        try {
-            File myObj = new File(args[0]);
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
+        if (args.length > 1) {
+            try {
+                File myObj = new File(args[0]);
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    System.out.println(data);
+                }
+                myReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
             }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
 
-
-
-
-        if (args.length > 0) {
             for (String arg: args) {
                 System.out.println(arg);
             }
