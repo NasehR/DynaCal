@@ -1,6 +1,6 @@
 package edu.curtin.dynacal.app;
 
-import edu.curtin.dynacal.api.Api;
+import edu.curtin.dynacal.api.API;
 import edu.curtin.dynacal.calplugins.Repeat;
 import edu.curtin.dynacal.calplugins.Notify;
 import edu.curtin.terminalgrid.TerminalGrid;
@@ -16,12 +16,9 @@ public class Main {
         System.out.println("Hello world! from app");
 
 
-        Api api = new Api();
         Repeat repeat = new Repeat();
         Notify notify = new Notify();
 
-        api.print();
-        repeat.print();
         notify.print();
 
         for (String arg: args) {
