@@ -4,12 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
+//TODO:
+// Comments
+// Documentation
+
 public class TODCalendarEvent implements IEvent {
     // Class Fields
     private String title;
     private LocalDate startDate;
     private LocalTime startTime;
-    private int duration;
+    private Integer duration;
 
     // Constructor
     public TODCalendarEvent(String title, LocalDate startDate, LocalTime startTime, int duration) {

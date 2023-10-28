@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
+//TODO:
+// Comments
+// Documentation
+
 public class AllDayCalendarEvent implements IEvent {
     private String title;
     private LocalDate startDate;
