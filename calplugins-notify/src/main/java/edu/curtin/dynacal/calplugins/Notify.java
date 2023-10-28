@@ -1,7 +1,5 @@
 package edu.curtin.dynacal.calplugins;
 
-import edu.curtin.dynacal.api.Api;
-
 public class Notify {
     public Notify() {
         System.out.println("Notify Constructor");
