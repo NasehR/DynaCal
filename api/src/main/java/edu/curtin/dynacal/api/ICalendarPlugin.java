@@ -4,7 +4,7 @@ package edu.curtin.dynacal.api;
 // Comments
 // Documentation
 
-public interface CalendarPlugin {
+public interface ICalendarPlugin {
 
     void start(API api);
 }
