@@ -1,7 +1,5 @@
 package edu.curtin.dynacal.api;
 
-import java.util.function.Function;
-
 public interface API {
 
     /*
