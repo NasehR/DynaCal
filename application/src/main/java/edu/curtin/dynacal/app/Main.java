@@ -17,9 +17,6 @@ public class Main {
 
 
         Repeat repeat = new Repeat();
-        Notify notify = new Notify();
-
-        notify.print();
 
         for (String arg: args) {
             System.out.println(arg);
