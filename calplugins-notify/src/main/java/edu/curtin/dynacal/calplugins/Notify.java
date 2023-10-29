@@ -1,11 +1,14 @@
 package edu.curtin.dynacal.calplugins;
 
-public class Notify {
-    public Notify() {
-        System.out.println("Notify Constructor");
-    }
+import edu.curtin.dynacal.api.API;
+import edu.curtin.dynacal.api.ICalendarPlugin;
 
-    public void print() {
-        System.out.println("Hello world! from notify");
+public class Notify implements ICalendarPlugin {
+
+    private API api;
+
+    @Override
+    public void start(API api) {
+        this.api = api;
     }
 }
