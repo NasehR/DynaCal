@@ -12,6 +12,11 @@ public class AllDayCalendarEvent implements IEvent {
     private String title;
     private LocalDate startDate;
 
+    public AllDayCalendarEvent(String title, LocalDate startDate) {
+        this.title = title;
+        this.startDate = startDate;
+    }
+
     @Override
     public String getName() {
         return null;
