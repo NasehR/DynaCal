@@ -3,33 +3,11 @@
 // Document
 PARSER_BEGIN(CalendarParser)
 
-//import edu.curtin.dynacal.repeats.RepeatPlugin;
-//import edu.curtin.dynacal.notify.NotifyPlugin;
-
-import edu.curtin.dynacal.api.IEvent;
-import edu.curtin.dynacal.api.TODCalendarEvent;
-import edu.curtin.dynacal.api.AllDayCalendarEvent;
-import java.io.FileInputStream;
-import java.text.ParseException;import java.util.List;
-
+import edu.curtin.dynacal.api.AllDayCalendarEvent;import edu.curtin.dynacal.api.IEvent;import edu.curtin.dynacal.api.TODCalendarEvent;import java.io.*;import java.time.LocalDate;import java.time.LocalTime;
 public class CalendarParser {
-    private List<IEvent> events = new ArrayList<>();
-//    private List<RepeatPlugin> repeatPlugins = new ArrayList<>();
-//    private List<NotifyPlugin> notifyPlugins = new ArrayList<>();
-
-    public List<IEvent> getEvents() {
-        return events;
-    }
-
-    public void parse(String file)
-    {
-        try {
-            CalendarParser parser = new CalendarParser(new FileInputStream(file));
-            parser.parse();
-        } catch (ParseException e) {
-            String message = e.getMessage();
-        }
-    }
+    public static void parse(String filename) throws IOException, ParseException {
+        CalendarParser p = new CalendarParser(new FileInputStream(filename));
+        p.dsl();
 }
 
 PARSER_END(CalendarParser)
@@ -40,44 +18,33 @@ TOKEN: {
   < DATE: "([0-9]{4}-[0-9]{2}-[0-9]{2})" > |
   < TIME: "([0-9]{2}:[0-9]{2}:[0-9]{2})" > |
   < DURATION: "(\d+)" > |
-  < TITLE: "\"" (~["\""])* "\"" > |
-  < ALLDAY: "all-day" >
+  < STRING: "\"" (~["\""])* "\"" >
 }
 
-IEvent parseEvent() :
+void dsl():
 {
-    Token date, time, duration, title;
+    IEvent event;
 }
 {
-    "event" <DATE> (date = <DATE>) <TIME> (time = <TIME>) <DURATION> (duration = <DURATION>) <TITLE> (title = <TITLE>)
+    event = event() <EOF>
+}
+
+IEvent event():
+{
+    LocalDate date;
+    LocalTime time;
+    int duration;
+    String eventName;
+}
+{
+    "event" date = <DATE> time = <TIME> duration = <DURATION> eventName = <STRING>
     {
-        IEvent event = new TODCalendarEvent(date, time, duration, title);
-        System.out.println("Event: Date = " + date + ", Time = " + time + ", Duration = " + duration + ", Title = " + title);
+        IEvent event = new TODCalendarEvent(eventName, date, time, duration);
+        return event;
     }
-    | "event" <DATE> (date = <DATE>) <ALLDAY> <TITLE> (title = <TITLE>)
+    | "event" date = <DATE> eventName = <STRING>
     {
-        IEvent event = new AllDayCalendarEvent(date, title);
-        System.out.println("Event: Date = " + date + ", All Day, Title = " + title);
-    }
-}
-
-/*
-void parsePlugin() :
-{
-    Token pluginName;
-}
-{
-
-}
-
-void parseScript() :
-{
-    Token scriptName;
-}
-{
-    "script" <TITLE> (scriptName = <TITLE>)
-    {
-        System.out.println("Script: " + scriptName);
+        IEvent event = new AllDayCalendarEvent(eventName, date);
+        return event;
     }
 }
- */
