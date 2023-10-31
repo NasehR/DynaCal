@@ -3,11 +3,25 @@
 // Document
 PARSER_BEGIN(CalendarParser)
 
-import edu.curtin.dynacal.api.AllDayCalendarEvent;import edu.curtin.dynacal.api.IEvent;import edu.curtin.dynacal.api.TODCalendarEvent;import java.io.*;import java.time.LocalDate;import java.time.LocalTime;
+import edu.curtin.dynacal.api.AllDayCalendarEvent;
+import edu.curtin.dynacal.api.IEvent;
+import edu.curtin.dynacal.api.TODCalendarEvent;
+import java.io.*;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class CalendarParser {
+    private List<IEvent> eventList = new ArrayList<IEvent>();
+
+    public getEventList() {
+        return eventList;
+    }
+
     public static void parse(String filename) throws IOException, ParseException {
         CalendarParser p = new CalendarParser(new FileInputStream(filename));
         p.dsl();
+    }
 }
 
 PARSER_END(CalendarParser)
@@ -18,7 +32,9 @@ TOKEN: {
   < DATE: "([0-9]{4}-[0-9]{2}-[0-9]{2})" > |
   < TIME: "([0-9]{2}:[0-9]{2}:[0-9]{2})" > |
   < DURATION: "(\d+)" > |
-  < STRING: "\"" (~["\""])* "\"" >
+  < STRING: "\"" (~["\""])* "\"" > |
+  < EVENT: "event" > |
+  < ALLDAY: "allday" >
 }
 
 void dsl():
@@ -37,12 +53,12 @@ IEvent event():
     String eventName;
 }
 {
-    "event" date = <DATE> time = <TIME> duration = <DURATION> eventName = <STRING>
+    <EVENT> date = <DATE> time = <TIME> duration = <DURATION> eventName = <STRING>
     {
         IEvent event = new TODCalendarEvent(eventName, date, time, duration);
         return event;
     }
-    | "event" date = <DATE> eventName = <STRING>
+    | <EVENT> date = <DATE> <ALLDAY> eventName = <STRING>
     {
         IEvent event = new AllDayCalendarEvent(eventName, date);
         return event;
