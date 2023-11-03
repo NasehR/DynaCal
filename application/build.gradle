@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'pmd'
+    id 'ca.coglinc2.javacc' version '3.0.0'
 }
 
 repositories {
