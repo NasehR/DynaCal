@@ -31,3 +31,8 @@ pmd {
     ruleSets = []
     ruleSetFiles = files('saed-pmd-rules.xml')
 }
+
+compileJavacc {
+    inputDirectory = file('src/main/jj/')
+    outputDirectory = file(project.buildDir.absolutePath + '/javacc')
+}

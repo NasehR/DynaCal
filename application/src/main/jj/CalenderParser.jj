@@ -1,23 +1,24 @@
 //TODO:
 // Comment
 // Document
+
 PARSER_BEGIN(CalendarParser)
+package edu.curtin.dynacal.dsl;
 
 import edu.curtin.dynacal.api.AllDayCalendarEvent;
 import edu.curtin.dynacal.api.IEvent;
 import edu.curtin.dynacal.api.TODCalendarEvent;
 import java.io.*;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.time.format.DateTimeFormatter;import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarParser {
-    private List<IEvent> eventList = new ArrayList<>();
-    private Map<String, Map<String, String>> plugInInfo = new HashMap<>();
+    private List<IEvent> eventList = new ArrayList<IEvent>();
+    private Map<String, Map<String, String>> plugInInfo = new HashMap<String, Map<String, String>>();
 
     public List<IEvent> getEventList() {
         return eventList;
@@ -27,9 +28,10 @@ public class CalendarParser {
         return plugInInfo;
     }
 
-    public static void parse(String filename) throws IOException, ParseException {
+    public static CalendarParser parse(String filename) throws IOException, ParseException {
         CalendarParser p = new CalendarParser(new FileInputStream(filename));
-        p.dsl();
+        dsl(p.eventList, p.plugInInfo);
+        return p;
     }
 }
 
@@ -38,63 +40,79 @@ PARSER_END(CalendarParser)
 SKIP: { " " | "\t" | "\n" | "\r" }
 
 TOKEN: {
-  < DATE: "[0-9]{4}-[0-9]{2}-[0-9]{2}" > |
-  < TIME: "[0-9]{2}:[0-9]{2}:[0-9]{2}" > |
-  < DURATION: "(\d+)" > |
+  < DATE: (["0"-"9"]){4}"-"(["0"-"9"]){2}"-"(["0"-"9"]){2} > |
+  < TIME: (["0"-"9"]){2}":"(["0"-"9"]){2}":"(["0"-"9"]){2} > |
+  < DURATION: (["0" - "9"])+ > |
   < STRING: "\"" (~["\""])* "\"" > |
   < EVENT: "event" > |
   < ALLDAY: "allday" > |
-  < KEY: "\w+" >
+  < PLUGIN: "plugin" > |
+  < KEY: (["a"-"z","A"-"Z","0"-"9"])+ > |
+  < PLUGINNAME: (["a"-"z","A"-"Z","0"-"9"])+("."(["a"-"z","A"-"Z","0"-"9"])+)*>
 }
 
-void dsl():
+void dsl(List<IEvent> eventList, Map<String, Map<String, String>> plugInInfo):
 {
     IEvent event;
+    Token pluginName;
+    Map<String, String> pluginKeyValuePairs;
 }
 {
     event = event()
     {
         eventList.add(event);
     }
-//    | pluginName = <PLUGIN> "{" pluginKeyValuePairs = pluginKeyValuePairs() "}"
+    | <PLUGIN> pluginName = <PLUGINNAME> pluginKeyValuePairs = pluginKeyValuePairs()
+    {
+        plugInInfo.put(pluginName.image, pluginKeyValuePairs);
+    }
 }
 
 IEvent event():
 {
-    LocalDate date;
-    LocalTime time;
-    int duration;
-    String eventName;
+    Token dateToken;
+    Token timeToken;
+    Token durationToken;
+    Token eventNameToken;
+
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
 }
 {
-    <EVENT> date = <DATE> time = <TIME> duration = <DURATION> eventName = <STRING>
-    {
-        IEvent event = new TODCalendarEvent(eventName, date, time, duration);
-        return event;
-    }
-    | <EVENT> date = <DATE> <ALLDAY> eventName = <STRING>
-    {
-        IEvent event = new AllDayCalendarEvent(eventName, date);
-        return event;
-    }
+    <EVENT> dateToken = <DATE>
+    (
+        timeToken = <TIME> durationToken = <DURATION> eventNameToken = <STRING>
+        {
+            IEvent event = new TODCalendarEvent(eventNameToken.image, LocalDate.parse(dateToken.image, dateFormatter), LocalTime.parse(timeToken.image, timeFormatter), Integer.parseInt(durationToken.image));
+            return event;
+        }
+        | <ALLDAY> eventNameToken = <STRING>
+        {
+            IEvent event = new AllDayCalendarEvent(eventNameToken.image, LocalDate.parse(dateToken.image, dateFormatter));
+            return event;
+        }
+    )
 }
 
 Map<String, String> pluginKeyValuePairs() :
 {
-    Map<String, String> keyValuePairs = new HashMap<>();
+    Map<String, String> keyValuePairs = new HashMap<String, String>();
     String key;
     String value;
+
+    Token keyToken;
+    Token valueToken;
 }
 {
     "{"
-        key = <KEY> ": " value = <STRING>
+        keyToken = <KEY> ": " valueToken = <STRING>
     {
-        keyValuePairs.put(key, value);
+        keyValuePairs.put(keyToken.image, valueToken.image);
     }
     (
-        "," key = <KEY> ": " value = <STRING>
+        "," keyToken = <KEY> ": " valueToken = <STRING>
         {
-            keyValuePairs.put(key, value);
+            keyValuePairs.put(keyToken.image, valueToken.image);
         }
     )*
     "}"
