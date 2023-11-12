@@ -20,6 +20,7 @@ import java.util.List;
 public class CalendarParser {
     private List<IEvent> eventList = new ArrayList<IEvent>();
     private Map<String, Map<String, String>> plugInInfo = new HashMap<String, Map<String, String>>();
+    private List<String> scripts = new ArrayList<String>();
 
     public List<IEvent> getEventList() {
         return eventList;
@@ -29,10 +30,18 @@ public class CalendarParser {
         return plugInInfo;
     }
 
+    public List<String> getScripts() {
+        return scripts;
+    }
+
     public static CalendarParser parse(String filename) throws IOException, ParseException {
         CalendarParser p = new CalendarParser(new FileInputStream(filename));
-        dsl(p.eventList, p.plugInInfo);
+        dsl(p.eventList, p.plugInInfo, p.scripts);
         return p;
+    }
+
+    private static String stringConverter(String string) {
+        return string.substring(1, string.length() - 1).replace("\"\"", "\"");
     }
 }
 
@@ -44,18 +53,20 @@ TOKEN: {
   < DATE: (["0"-"9"]){4}"-"(["0"-"9"]){2}"-"(["0"-"9"]){2} > |
   < TIME: (["0"-"9"]){2}":"(["0"-"9"]){2}":"(["0"-"9"]){2} > |
   < DURATION: (["0" - "9"])+ > |
-  < STRING: "\"" (~["\""])* "\"" > |
+  < STRING: "\"" (~["\""] ("\"\"")*)* "\"" > |
   < EVENT: "event" > |
   < ALLDAY: "allday" > |
   < PLUGIN: "plugin" > |
+  < SCRIPT: "script" > |
   < KEY: (["a"-"z","A"-"Z","0"-"9"])+ > |
   < PLUGINNAME: (["a"-"z","A"-"Z","0"-"9"])+("."(["a"-"z","A"-"Z","0"-"9"])+)*>
 }
 
-void dsl(List<IEvent> eventList, Map<String, Map<String, String>> plugInInfo):
+void dsl(List<IEvent> eventList, Map<String, Map<String, String>> plugInInfo, List<String> scripts):
 {
     IEvent event;
     Token pluginName;
+    Token script;
     Map<String, String> pluginKeyValuePairs;
 }
 {
@@ -68,7 +79,12 @@ void dsl(List<IEvent> eventList, Map<String, Map<String, String>> plugInInfo):
         {
             plugInInfo.put(pluginName.image, pluginKeyValuePairs);
         }
+        | <SCRIPT> script = <STRING>
+        {
+            scripts.add(stringConverter(script.image));
+        }
     )*
+    <EOF>
 }
 
 IEvent event():
@@ -86,12 +102,12 @@ IEvent event():
     (
         timeToken = <TIME> durationToken = <DURATION> eventNameToken = <STRING>
         {
-            IEvent event = new TODCalendarEvent(eventNameToken.image, LocalDate.parse(dateToken.image, dateFormatter), LocalTime.parse(timeToken.image, timeFormatter), Integer.parseInt(durationToken.image));
+            IEvent event = new TODCalendarEvent(stringConverter(eventNameToken.image), LocalDate.parse(dateToken.image, dateFormatter), LocalTime.parse(timeToken.image, timeFormatter), Integer.parseInt(durationToken.image));
             return event;
         }
         | <ALLDAY> eventNameToken = <STRING>
         {
-            IEvent event = new AllDayCalendarEvent(eventNameToken.image, LocalDate.parse(dateToken.image, dateFormatter));
+            IEvent event = new AllDayCalendarEvent(stringConverter(eventNameToken.image), LocalDate.parse(dateToken.image, dateFormatter));
             return event;
         }
     )
@@ -110,12 +126,12 @@ Map<String, String> pluginKeyValuePairs() :
     "{"
         keyToken = <KEY> ": " valueToken = <STRING>
     {
-        keyValuePairs.put(keyToken.image, valueToken.image);
+        keyValuePairs.put(keyToken.image, stringConverter(valueToken.image));
     }
     (
         "," keyToken = <KEY> ": " valueToken = <STRING>
         {
-            keyValuePairs.put(keyToken.image, valueToken.image);
+            keyValuePairs.put(keyToken.image, stringConverter(valueToken.image));
         }
     )*
     "}"

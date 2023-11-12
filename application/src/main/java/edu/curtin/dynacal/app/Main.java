@@ -21,6 +21,7 @@ public class Main {
             p = CalendarParser.parse(args[0]);
             List<IEvent> eventList = p.getEventList();
             Map<String, Map<String, String>> plugInInfo = p.getPlugInInfo();
+            List<String> scripts = p.getScripts();
 
             for ( IEvent event: eventList ) {
                 System.out.println(event.getName());
@@ -34,6 +35,10 @@ public class Main {
                 for (var keyValuePair1: keyValuePair.getValue().entrySet()) {
                     System.out.println("\t" + keyValuePair1.getKey() + ": " + keyValuePair1.getValue());
                 }
+            }
+
+            for ( String script: scripts ) {
+                System.out.println(script);
             }
 
         }
