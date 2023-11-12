@@ -10,9 +10,26 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
-    //TODO:
-//        -
+    // TODO:
+    // - handling scripts                                           (MEDIUM (2)) REFLECTIONS
+    // - handling plugins                                           (EASY (3))
+    // - handling notifications                                     (EASY (1))
+    // - displaying the calendar                                    (EASY ())
+    // - viewing the calendar (movement wise)                       (DIFFICULT??)
+    // - Internationalisation (Spanish and maybe others if time)    (MEDIUM ())
+    // - Documentation                                              (EASY (0))
 
+    // MODEL (M)
+        // - All the events
+        // -
+    // VIEW (V)
+        // - Responsible for printing text on the terminal
+        // - User interactions
+    // CONTROLLER (C)
+        // - Handle all the extras (running plugins and scripts when called)
+        // - calendar navigation (moving)
+
+    // V -> C -> V.
     public static void main(String[] args) {
         if (args.length != 1) {
             //
