@@ -1,13 +1,18 @@
 package edu.curtin.dynacal.app;
 
 import edu.curtin.dynacal.api.IEvent;
+import edu.curtin.terminalgrid.TerminalGrid;
 import edu.curtin.dynacal.dsl.CalendarParser;
 import edu.curtin.dynacal.dsl.ParseException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Main {
+    //TODO:
+//        -
+
     public static void main(String[] args) {
         if (args.length != 1) {
             //
@@ -49,7 +54,7 @@ public class Main {
             System.out.println(exception.toString());
         }
 
-    /*
+
         // Demonstration data
         String[][] messages = {{"one two three",     "four five six",             "seven eight nine"},
                 {"ten eleven twelve", "thirteen fourteen fifteen", "sixteen seventeen eighteen"}};
@@ -112,6 +117,6 @@ public class Main {
                 "\u256d\u2500", "\u2500\u256e", "\u2570\u2500", "\u2500\u256f",
                 "\u2500\u252c\u2500", "\u2500\u2534\u2500", "\u251c\u254c", "\u254c\u2524", "\u254c\u253c\u254c"));
         terminalGrid.print(messages, rowHeadings, colHeadings);
-    */
+
     }
 }
