@@ -1,17 +1,11 @@
 package edu.curtin.dynacal.app;
 
-import edu.curtin.dynacal.api.API;
-import edu.curtin.dynacal.calplugins.Repeat;
-import edu.curtin.dynacal.calplugins.Notify;
-import edu.curtin.terminalgrid.TerminalGrid;
+import edu.curtin.dynacal.api.IEvent;
 import edu.curtin.dynacal.dsl.CalendarParser;
 import edu.curtin.dynacal.dsl.ParseException;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,8 +15,20 @@ public class Main {
 
         System.out.println("Welcome to DYNACAL");
 
+        CalendarParser p;
+
         try {
-            CalendarParser.parse(args[0]);
+            p = CalendarParser.parse(args[0]);
+            List<IEvent> eventList = p.getEventList();
+            Map<String, Map<String, String>> plugInInfo = p.getPlugInInfo();
+
+            for ( IEvent event: eventList ) {
+                System.out.println(event.getName());
+                System.out.println(event.getStartDate());
+            }
+
+
+
         }
         catch (ParseException exception) {
             System.out.println(exception.toString());

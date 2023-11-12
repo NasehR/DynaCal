@@ -26,21 +26,21 @@ public class TODCalendarEvent implements IEvent {
     // Class Methods
     @Override
     public String getName() {
-        return null;
+        return title;
     }
 
     @Override
     public LocalDate getStartDate() {
-        return null;
+        return startDate;
     }
 
     @Override
     public Optional<LocalTime> getStartTime() {
-        return Optional.empty();
+        return Optional.of(startTime);
     }
 
     @Override
     public Optional<Integer> getDuration() {
-        return Optional.empty();
+        return Optional.of(duration);
     }
 }

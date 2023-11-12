@@ -19,12 +19,12 @@ public class AllDayCalendarEvent implements IEvent {
 
     @Override
     public String getName() {
-        return null;
+        return title;
     }
 
     @Override
     public LocalDate getStartDate() {
-        return null;
+        return startDate;
     }
 
     @Override
