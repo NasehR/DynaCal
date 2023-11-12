@@ -4,57 +4,34 @@ import edu.curtin.dynacal.api.API;
 import edu.curtin.dynacal.calplugins.Repeat;
 import edu.curtin.dynacal.calplugins.Notify;
 import edu.curtin.terminalgrid.TerminalGrid;
-
+import edu.curtin.dynacal.dsl.CalendarParser;
+import edu.curtin.dynacal.dsl.ParseException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world! from app");
-
-
-        Repeat repeat = new Repeat();
-
-        for (String arg: args) {
-            System.out.println(arg);
+        if (args.length != 1) {
+            //
         }
 
-        if (args.length > 1) {
-            try {
-                File myObj = new File(args[0]);
-                Scanner myReader = new Scanner(myObj);
-                while (myReader.hasNextLine()) {
-                    String data = myReader.nextLine();
-                    System.out.println(data);
-                }
-                myReader.close();
-            } catch (FileNotFoundException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
+        System.out.println("Welcome to DYNACAL");
 
-            for (String arg: args) {
-                System.out.println(arg);
-            }
-
-//            try {
-//                File myObj = new File(args[0]);
-//                Scanner myReader = new Scanner(myObj);
-//                while (myReader.hasNextLine()) {
-//                    String data = myReader.nextLine();
-//                    System.out.println(data);
-//                }
-//                myReader.close();
-//            } catch (FileNotFoundException e) {
-//                System.out.println("An error occurred.");
-//                e.printStackTrace();
-//            }
+        try {
+            CalendarParser.parse(args[0]);
+        }
+        catch (ParseException exception) {
+            System.out.println(exception.toString());
+        }
+        catch (IOException exception) {
+            System.out.println(exception.toString());
         }
 
-
+    /*
         // Demonstration data
         String[][] messages = {{"one two three",     "four five six",             "seven eight nine"},
                 {"ten eleven twelve", "thirteen fourteen fifteen", "sixteen seventeen eighteen"}};
@@ -117,5 +94,6 @@ public class Main {
                 "\u256d\u2500", "\u2500\u256e", "\u2570\u2500", "\u2500\u256f",
                 "\u2500\u252c\u2500", "\u2500\u2534\u2500", "\u251c\u254c", "\u254c\u2524", "\u254c\u253c\u254c"));
         terminalGrid.print(messages, rowHeadings, colHeadings);
+    */
     }
 }

@@ -76,7 +76,7 @@ IEvent event():
     Token eventNameToken;
 
     DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
-    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 }
 {
     <EVENT> dateToken = <DATE>

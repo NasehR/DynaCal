@@ -9,10 +9,6 @@ repositories {
     mavenCentral()
 }
 
-compileJava {
-    options.compilerArgs << "-Xlint:all,-serial"
-}
-
 dependencies {
     implementation project (':lib')
     implementation project (':api')
