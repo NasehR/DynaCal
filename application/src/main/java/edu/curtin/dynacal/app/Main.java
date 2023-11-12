@@ -27,7 +27,14 @@ public class Main {
                 System.out.println(event.getStartDate());
             }
 
+            System.out.println(plugInInfo.isEmpty());
 
+            for (var keyValuePair: plugInInfo.entrySet()) {
+                System.out.println(keyValuePair.getKey() + ":");
+                for (var keyValuePair1: keyValuePair.getValue().entrySet()) {
+                    System.out.println("\t" + keyValuePair1.getKey() + ": " + keyValuePair1.getValue());
+                }
+            }
 
         }
         catch (ParseException exception) {

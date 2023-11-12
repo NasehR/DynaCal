@@ -59,14 +59,16 @@ void dsl(List<IEvent> eventList, Map<String, Map<String, String>> plugInInfo):
     Map<String, String> pluginKeyValuePairs;
 }
 {
-    event = event()
-    {
-        eventList.add(event);
-    }
-    | <PLUGIN> pluginName = <PLUGINNAME> pluginKeyValuePairs = pluginKeyValuePairs()
-    {
-        plugInInfo.put(pluginName.image, pluginKeyValuePairs);
-    }
+    (
+        event = event()
+        {
+            eventList.add(event);
+        }
+        | <PLUGIN> pluginName = <PLUGINNAME> pluginKeyValuePairs = pluginKeyValuePairs()
+        {
+            plugInInfo.put(pluginName.image, pluginKeyValuePairs);
+        }
+    )*
 }
 
 IEvent event():
