@@ -7,4 +7,6 @@ package edu.curtin.dynacal.api;
 public interface ICalendarPlugin {
 
     void start(API api);
+
+    void onEvent(IEvent event);
 }
