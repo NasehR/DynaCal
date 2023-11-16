@@ -1,4 +1,6 @@
 event 2023-10-01 15:00:00 90 "Meeting 1"
+event 2023-11-16 15:30:00 90 "Meeting 1"
+event 2023-11-16 15:30:00 90 "Meeting 2"
 
 plugin com.example.pluginpkg.ExamplePlugin {
     key1: "value 1",
