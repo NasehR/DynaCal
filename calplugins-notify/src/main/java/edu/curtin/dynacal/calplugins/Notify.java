@@ -4,6 +4,8 @@ import edu.curtin.dynacal.api.API;
 import edu.curtin.dynacal.api.ICalendarPlugin;
 import edu.curtin.dynacal.api.IEvent;
 
+import javax.swing.*;
+
 public class Notify implements ICalendarPlugin {
 
     private API api;
@@ -15,6 +17,6 @@ public class Notify implements ICalendarPlugin {
 
     @Override
     public void onEvent(IEvent event) {
-
+        JOptionPane.showMessageDialog(null, event.getName() + " has started");
     }
 }
