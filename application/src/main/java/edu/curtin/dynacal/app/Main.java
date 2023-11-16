@@ -23,6 +23,7 @@ public class Main {
     // - handling plugins                                           (EASY (3))
     // - handling notifications                                     (EASY (1))
     // - displaying the calendar                                    (EASY ())
+        // DONE
     // - viewing the calendar (movement wise)                       (DIFFICULT??)
     // - Internationalisation (Spanish and maybe others if time)    (MEDIUM ())
     // - Documentation                                              (EASY (0))
@@ -31,7 +32,7 @@ public class Main {
         // - All the events
         // -
     // VIEW (V)
-        // - Responsible for printing text on the terminal
+        // - Responsible for printing text on the terminal          (DONE)
         // - User interactions
     // CONTROLLER (C)
         // - Handle all the extras (running plugins and scripts when called)
@@ -40,7 +41,6 @@ public class Main {
     // V -> C -> V.
     public static void main(String[] args) {
         if (args.length != 1) {
-//            System.out.println("Incorrect number of arguments provided. The application requires one argument however, " + args.length + "argument/s were provided.");
             throw new ArrayIndexOutOfBoundsException("Incorrect number of arguments provided. The application requires one argument however, " + args.length + "argument/s were provided.");
         }
 
@@ -51,6 +51,7 @@ public class Main {
         var terminalGrid = TerminalGrid.create();
         // TODO: Changed later for I18N
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         List<IEvent> eventList = List.of();
         Map<String, Map<String, String>> plugInInfo;
         List<String> scripts;
@@ -77,14 +78,15 @@ public class Main {
 //                System.out.println(script);
 //            }
 
-        } catch (ParseException exception) {
+        }
+        catch (ParseException exception) {
             System.out.println(exception.toString());
-        } catch (IOException exception) {
+        }
+        catch (IOException exception) {
             System.out.println(exception.toString());
         }
 
-        TerminalView terminalView = new TerminalView(terminalGrid, eventList, dateFormatter);
+        TerminalView terminalView = new TerminalView(terminalGrid, eventList, dateFormatter, timeFormatter);
         terminalView.print();
-
     }
 }

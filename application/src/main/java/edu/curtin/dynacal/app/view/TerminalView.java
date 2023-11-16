@@ -12,12 +12,13 @@ public class TerminalView {
     private TerminalGrid calendarGrid;
     private List<IEvent> eventList;
     DateTimeFormatter dateFormatter;
+    DateTimeFormatter timeFormatter;
 
-    public TerminalView(TerminalGrid calendarGrid, List<IEvent> eventList, DateTimeFormatter dateFormatter) {
+    public TerminalView(TerminalGrid calendarGrid, List<IEvent> eventList, DateTimeFormatter dateFormatter, DateTimeFormatter timeFormatter) {
         this.calendarGrid = calendarGrid;
         this.eventList = eventList;
         this.dateFormatter = dateFormatter;
-
+        this.timeFormatter = timeFormatter;
     }
 
     public void print() {
@@ -57,9 +58,13 @@ public class TerminalView {
             LocalDate startDate = event.getStartDate();
             LocalDate startWeekDate = LocalDate.now();
             LocalDate endWeekDate = LocalDate.now().plusDays(6);
+            StringBuilder stringBuilder = new StringBuilder();
 
             if (startDate.isAfter(startWeekDate.minusDays(1)) && startDate.isBefore(endWeekDate.plusDays(1))) {
                 System.out.println("Start Date:\t" + event.getStartDate());
+                stringBuilder.append(event.getName());
+                stringBuilder.append("\n");
+
 
                 int dayIndex = startWeekDate.until(startDate).getDays();
                 int timeIndex = 0;
@@ -69,9 +74,26 @@ public class TerminalView {
                             .getStartTime()
                             .get()
                             .getHour() + 1;
+
+                    stringBuilder.append(event
+                            .getStartTime()
+                            .get()
+                            .format(timeFormatter)
+                    );
+
+                    stringBuilder.append("\n");
                 }
 
-                events[timeIndex][dayIndex] = events[timeIndex][dayIndex] + event.getName() + "\n";
+                if (event.getDuration().isPresent()) {
+                    stringBuilder.append(event
+                            .getDuration()
+                            .get()
+                    );
+
+                    stringBuilder.append("\n");
+                }
+
+                events[timeIndex][dayIndex] = events[timeIndex][dayIndex] + stringBuilder;
             }
         }
 
