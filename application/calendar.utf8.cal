@@ -3,7 +3,7 @@ event 2023-11-16 15:30:00 90 "Meeting 1"
 event 2023-11-16 15:30:00 90 "Meeting 2"
 event 2023-11-16 allday "Company Tour"
 
-plugin com.example.pluginpkg.ExamplePlugin {
+plugin edu.curtin.dynacal.calplugins.Notify {
     key1: "value 1",
     key2: "value 2"
 }

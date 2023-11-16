@@ -1,6 +1,8 @@
 package edu.curtin.dynacal.app;
 
 import edu.curtin.dynacal.api.IEvent;
+import edu.curtin.dynacal.app.controller.CalendarController;
+import edu.curtin.dynacal.app.controller.ExtraController;
 import edu.curtin.dynacal.app.view.TerminalView;
 import edu.curtin.terminalgrid.TerminalGrid;
 import edu.curtin.dynacal.dsl.CalendarParser;
@@ -19,23 +21,21 @@ import java.util.Map;
 
 public class Main {
     // TODO:
-    // - handling scripts                                           (MEDIUM (2)) REFLECTIONS
-    // - handling plugins                                           (EASY (3))
+    // - handling scripts                                           (MEDIUM (2)) REFLECTIONS   (DONE)
+    // - handling plugins                                           (EASY (3))                 (DONE)
     // - handling notifications                                     (EASY (1))
     // - displaying the calendar                                    (EASY ())
-        // DONE
     // - viewing the calendar (movement wise)                       (DIFFICULT??)
     // - Internationalisation (Spanish and maybe others if time)    (MEDIUM ())
     // - Documentation                                              (EASY (0))
 
     // MODEL (M)
         // - All the events
-        // -
     // VIEW (V)
         // - Responsible for printing text on the terminal                      (DONE)
         // - User interactions
     // CONTROLLER (C)
-        // - Handle all the extras (running plugins and scripts when called)
+        // - Handle all the extras (running plugins and scripts when called)    (DONE)
         // - calendar navigation (moving)
 
     // V -> C -> V.
@@ -53,8 +53,10 @@ public class Main {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         List<IEvent> eventList = List.of();
-        Map<String, Map<String, String>> plugInInfo;
-        List<String> scripts;
+        Map<String, Map<String, String>> plugInInfo = Map.of();
+        List<String> scripts = List.of();
+        CalendarController calendarController;
+        ExtraController extraController;
 
         try {
             p = CalendarParser.parse(args[0]);
@@ -85,6 +87,12 @@ public class Main {
         catch (IOException exception) {
             System.out.println(exception.toString());
         }
+
+        calendarController = new CalendarController(eventList);
+        extraController = new ExtraController(calendarController, scripts);
+
+        extraController.initalisePlugins(plugInInfo);
+        extraController.runScripts();
 
         TerminalView terminalView = new TerminalView(terminalGrid, eventList, dateFormatter, timeFormatter);
         terminalView.print();

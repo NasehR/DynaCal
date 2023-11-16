@@ -13,7 +13,7 @@ public class Notify implements ICalendarPlugin {
 
     @Override
     public void start(API api, Map<String, String> parameters) {
-
+        System.out.println("Plugin Started");
     }
 
     @Override
