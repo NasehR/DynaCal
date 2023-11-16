@@ -3,23 +3,26 @@ package edu.curtin.dynacal.app.controller;
 import edu.curtin.dynacal.api.API;
 import edu.curtin.dynacal.api.ICalendarPlugin;
 import edu.curtin.dynacal.api.IEvent;
+import org.python.util.PythonInterpreter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ExtraController implements IEventListener {
+public class ExtraController {
 
     private List<ICalendarPlugin> calendarPluginList;
+    private List<String> scriptsList;
     private API api;
 
-    public ExtraController(API api) {
+    public ExtraController(API api, List<String> scriptsList) {
         calendarPluginList = new ArrayList<>();
+        this.scriptsList = scriptsList;
         this.api = api;
     }
 
-    public void initaliser(Map<String, Map<String, String>> plugInInfo) {
+    public void initalisePlugins(Map<String, Map<String, String>> plugInInfo) {
         for (var plugInEntry : plugInInfo.entrySet()) {
             try {
                 Class<?> classTemp = Class.forName(plugInEntry.getKey());
@@ -38,10 +41,13 @@ public class ExtraController implements IEventListener {
         }
     }
 
-    @Override
-    public void onEvent(IEvent event) {
-        for (ICalendarPlugin plugIn : calendarPluginList) {
-            plugIn.onEvent(event);
+    public void runScripts() {
+        for (String script: scriptsList) {
+            PythonInterpreter interpreter = new PythonInterpreter();
+
+            interpreter.set("calendar", this.api);
+
+            interpreter.exec(script);
         }
     }
 }

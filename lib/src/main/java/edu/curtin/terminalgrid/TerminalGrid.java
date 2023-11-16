@@ -56,14 +56,14 @@ public class TerminalGrid
     
     public static TerminalGrid create()
     {
-        var ansiOut = AnsiConsole.out();
-        ansiOut.setMode(AnsiMode.Force);
-        int terminalWidth = AnsiConsole.getTerminalWidth();
-        if(terminalWidth < 1)
-        {
-            terminalWidth = 80;
-        }
-        return new TerminalGrid(ansiOut, terminalWidth);
+//        var ansiOut = AnsiConsole.out();
+//        ansiOut.setMode(AnsiMode.Force);
+//        int terminalWidth = AnsiConsole.getTerminalWidth();
+//        if(terminalWidth < 1)
+//        {
+//            terminalWidth = 80;
+//        }
+        return new TerminalGrid(System.out, 100);
     }
     
     public TerminalGrid(PrintStream out, int terminalWidth)

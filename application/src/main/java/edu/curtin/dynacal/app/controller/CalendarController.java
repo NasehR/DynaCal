@@ -2,17 +2,18 @@ package edu.curtin.dynacal.app.controller;
 
 import edu.curtin.dynacal.api.API;
 import edu.curtin.dynacal.api.IEvent;
+import edu.curtin.dynacal.api.IEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarController implements API {
     private List<IEvent> eventsList;
-    private List<IEventListener> listeners;
+    private List<IEventHandler> handlers;
 
     public CalendarController(List<IEvent> eventsList) {
         this.eventsList = eventsList;
-        listeners = new ArrayList<>();
+        handlers = new ArrayList<>();
     }
 
     @Override
@@ -20,7 +21,8 @@ public class CalendarController implements API {
         eventsList.add(event);
     }
 
-    public void addListener(IEventListener listener) {
-        listeners.add(listener);
+    @Override
+    public void registerEventHandler(IEventHandler eventHandler) {
+        handlers.add(eventHandler);
     }
 }
