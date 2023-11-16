@@ -4,9 +4,11 @@ package edu.curtin.dynacal.api;
 // Comments
 // Documentation
 
+import java.util.Map;
+
 public interface ICalendarPlugin {
 
-    void start(API api);
+    void start(API api, Map<String, String> parameters);
 
     void onEvent(IEvent event);
 }
