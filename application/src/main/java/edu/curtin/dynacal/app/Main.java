@@ -32,7 +32,7 @@ public class Main {
         // - All the events
         // -
     // VIEW (V)
-        // - Responsible for printing text on the terminal          (DONE)
+        // - Responsible for printing text on the terminal                      (DONE)
         // - User interactions
     // CONTROLLER (C)
         // - Handle all the extras (running plugins and scripts when called)
