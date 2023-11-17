@@ -1,8 +1,6 @@
 package edu.curtin.dynacal.app.model;
 
 import edu.curtin.dynacal.api.IEvent;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventsModel {
