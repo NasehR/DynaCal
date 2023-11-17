@@ -3,6 +3,7 @@ package edu.curtin.dynacal.app;
 import edu.curtin.dynacal.api.IEvent;
 import edu.curtin.dynacal.app.controller.CalendarController;
 import edu.curtin.dynacal.app.controller.ExtraController;
+import edu.curtin.dynacal.app.model.EventsModel;
 import edu.curtin.dynacal.app.view.TerminalView;
 import edu.curtin.terminalgrid.TerminalGrid;
 import edu.curtin.dynacal.dsl.CalendarParser;
@@ -57,6 +58,7 @@ public class Main {
         List<String> scripts = List.of();
         CalendarController calendarController;
         ExtraController extraController;
+        EventsModel eventsModel;
 
         try {
             p = CalendarParser.parse(args[0]);
@@ -88,8 +90,10 @@ public class Main {
             System.out.println(exception.toString());
         }
 
-        calendarController = new CalendarController(eventList);
+        eventsModel = new EventsModel(eventList);
+        calendarController = new CalendarController(eventsModel);
         extraController = new ExtraController(calendarController, scripts);
+
 
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
