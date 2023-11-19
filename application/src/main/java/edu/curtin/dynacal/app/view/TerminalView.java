@@ -62,10 +62,8 @@ public class TerminalView {
             StringBuilder stringBuilder = new StringBuilder();
 
             if (startDate.isAfter(startWeekDate.minusDays(1)) && startDate.isBefore(endWeekDate.plusDays(1))) {
-                System.out.println("Start Date:\t" + event.getStartDate());
                 stringBuilder.append(event.getName());
                 stringBuilder.append("\n");
-
 
                 int dayIndex = startWeekDate.until(startDate).getDays();
                 int timeIndex = 0;

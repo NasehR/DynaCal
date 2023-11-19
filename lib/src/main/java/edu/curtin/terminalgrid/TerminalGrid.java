@@ -63,7 +63,7 @@ public class TerminalGrid
 //        {
 //            terminalWidth = 80;
 //        }
-        return new TerminalGrid(System.out, 100);
+        return new TerminalGrid(System.out, 140);
     }
     
     public TerminalGrid(PrintStream out, int terminalWidth)

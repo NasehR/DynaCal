@@ -39,13 +39,11 @@ public class Main {
             throw new ArrayIndexOutOfBoundsException("Incorrect number of arguments provided. The application requires one argument however, " + args.length + "argument/s were provided.");
         }
 
-        System.out.println("Welcome to DYNACAL");
-
         // Initialising
         CalendarParser p;
         var terminalGrid = TerminalGrid.create();
         // TODO: Changed later for I18N
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         List<IEvent> eventList = List.of();
         Map<String, Map<String, String>> plugInInfo = Map.of();
@@ -95,14 +93,17 @@ public class Main {
         extraController = new ExtraController(calendarController, scripts);
         terminalView = new TerminalView(terminalGrid, calendarController, dateFormatter, timeFormatter);
         uiNavigation = new UIView(calendarController);
-
-
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
 
-        terminalView.print();
-        uiNavigation.move();
-        terminalView.print();
+        for (int ii = 0; ii < 10; ii++){
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
 
+            System.out.println("Welcome to DYNACAL");
+            terminalView.print();
+            uiNavigation.move();
+
+        }
     }
 }
