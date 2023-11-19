@@ -96,14 +96,14 @@ public class Main {
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
 
-        for (int ii = 0; ii < 10; ii++){
+//        for (int ii = 0; ii < 10; ii++){
             System.out.print("\033[H\033[2J");
             System.out.flush();
 
             System.out.println("Welcome to DYNACAL");
             terminalView.print();
             uiNavigation.move();
-
-        }
+            calendarController.pollTime();
+//        }
     }
 }

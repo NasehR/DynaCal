@@ -4,9 +4,10 @@ event 2023-11-19 15:30:00 90 "Meeting 2"
 event 2023-11-19 allday "Company Tour"
 
 event 2023-11-20 15:00:00 60 "Meeting 3"
+event 2023-11-19 16:50:00 60 "Meeting 4"
 
 plugin edu.curtin.dynacal.calplugins.Notify {
-    key1: "value 1",
+    title: "Meeting 4",
     key2: "value 2"
 }
 

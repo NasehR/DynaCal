@@ -6,6 +6,7 @@ import edu.curtin.dynacal.api.IEventHandler;
 import edu.curtin.dynacal.app.model.EventsModel;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,28 @@ public class CalendarController implements API {
     public LocalDate getViewDate() {
         return viewDate;
     }
+
     public void setViewDate(LocalDate viewDate) {
         this.viewDate = viewDate;
+    }
+
+    public void pollTime() {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        List<IEvent> eventsList = eventsModel.getEventsList();
+
+        eventsList.stream()
+                .filter((event) -> event.getStartDate()
+                        .equals(currentDate))
+                .filter((event) -> event.getStartTime()
+                        .isPresent() && event
+                        .getStartTime()
+                        .get()
+                        .getHour() == currentTime.getHour())
+                .forEach((event) -> handlers
+                        .forEach((handler) -> handler
+                                .eventStarted(event))
+                );
     }
 }
