@@ -36,6 +36,7 @@ public class UIView {
         }
         else if (input.equals("quit")) {
             System.out.println("Exit Program.");
+            calendarController.stopTime();
         }
         else {
             System.out.println("Not a valid input.");

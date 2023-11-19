@@ -9,13 +9,11 @@ import edu.curtin.dynacal.app.view.UIView;
 import edu.curtin.terminalgrid.TerminalGrid;
 import edu.curtin.dynacal.dsl.CalendarParser;
 import edu.curtin.dynacal.dsl.ParseException;
-import org.w3c.dom.events.Event;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Main {
     // TODO:
@@ -65,16 +63,14 @@ public class Main {
                 System.out.println(event.getName());
                 System.out.println(event.getStartDate());
             }
-             */
-            /*
+
             for (var keyValuePair: plugInInfo.entrySet()) {
                 System.out.println(keyValuePair.getKey() + ":");
                 for (var keyValuePair1: keyValuePair.getValue().entrySet()) {
                     System.out.println("\t" + keyValuePair1.getKey() + ": " + keyValuePair1.getValue());
                 }
             }
-             */
-            /*
+
             for ( String script: scripts ) {
                 System.out.println(script);
             }
@@ -96,14 +92,14 @@ public class Main {
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
 
-//        for (int ii = 0; ii < 10; ii++){
+        calendarController.pollTime();
+        for (int ii = 0; ii < 10; ii++){
             System.out.print("\033[H\033[2J");
             System.out.flush();
 
             System.out.println("Welcome to DYNACAL");
             terminalView.print();
             uiNavigation.move();
-            calendarController.pollTime();
-//        }
+        }
     }
 }
