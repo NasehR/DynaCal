@@ -15,9 +15,4 @@ public class Notify implements ICalendarPlugin {
     public void start(API api, Map<String, String> parameters) {
         System.out.println("Plugin Started");
     }
-
-    @Override
-    public void onEvent(IEvent event) {
-        JOptionPane.showMessageDialog(null, event.getName() + " has started");
-    }
 }

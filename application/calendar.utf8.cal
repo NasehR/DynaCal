@@ -10,7 +10,13 @@ plugin edu.curtin.dynacal.calplugins.Notify {
     key2: "value 2"
 }
 
-plugin com.example.plugin2pkg.DemoPlugin{ keyA: "X",keyB: "Y",keyC: "Z" }
+plugin edu.curtin.dynacal.calplugins.Repeat {
+    title: "These meeting",
+    startDate: "01/12/2023",
+    startTime: "10:00:00",
+    duration: "60",
+    repeat: "7"
+}
 
 script "
 # I'm a Python script!
