@@ -33,3 +33,7 @@ compileJavacc {
     inputDirectory = file('src/main/jj/')
     outputDirectory = file(project.buildDir.absolutePath + '/javacc')
 }
+
+run {
+    standardInput = System.in
+}

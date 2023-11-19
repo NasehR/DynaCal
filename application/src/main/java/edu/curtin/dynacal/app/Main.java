@@ -5,6 +5,7 @@ import edu.curtin.dynacal.app.controller.CalendarController;
 import edu.curtin.dynacal.app.controller.ExtraController;
 import edu.curtin.dynacal.app.model.EventsModel;
 import edu.curtin.dynacal.app.view.TerminalView;
+import edu.curtin.dynacal.app.view.UIView;
 import edu.curtin.terminalgrid.TerminalGrid;
 import edu.curtin.dynacal.dsl.CalendarParser;
 import edu.curtin.dynacal.dsl.ParseException;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     // TODO:
@@ -52,6 +54,7 @@ public class Main {
         ExtraController extraController;
         EventsModel eventsModel;
         TerminalView terminalView;
+        UIView uiNavigation;
 
         try {
             p = CalendarParser.parse(args[0]);
@@ -90,11 +93,15 @@ public class Main {
         eventsModel = new EventsModel(eventList);
         calendarController = new CalendarController(eventsModel);
         extraController = new ExtraController(calendarController, scripts);
+        uiNavigation = new UIView();
+
 
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
 
         terminalView = new TerminalView(terminalGrid, eventList, dateFormatter, timeFormatter);
         terminalView.print();
+
+        uiNavigation.move();
     }
 }
