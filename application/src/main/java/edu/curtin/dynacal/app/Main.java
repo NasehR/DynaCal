@@ -93,15 +93,16 @@ public class Main {
         eventsModel = new EventsModel(eventList);
         calendarController = new CalendarController(eventsModel);
         extraController = new ExtraController(calendarController, scripts);
-        uiNavigation = new UIView();
+        terminalView = new TerminalView(terminalGrid, calendarController, dateFormatter, timeFormatter);
+        uiNavigation = new UIView(calendarController);
 
 
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
 
-        terminalView = new TerminalView(terminalGrid, eventList, dateFormatter, timeFormatter);
+        terminalView.print();
+        uiNavigation.move();
         terminalView.print();
 
-        uiNavigation.move();
     }
 }

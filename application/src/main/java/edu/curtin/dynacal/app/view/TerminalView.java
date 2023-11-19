@@ -1,6 +1,7 @@
 package edu.curtin.dynacal.app.view;
 
 import edu.curtin.dynacal.api.IEvent;
+import edu.curtin.dynacal.app.controller.CalendarController;
 import edu.curtin.terminalgrid.TerminalGrid;
 
 import java.time.LocalDate;
@@ -10,13 +11,13 @@ import java.util.List;
 public class TerminalView {
 
     private TerminalGrid calendarGrid;
-    private List<IEvent> eventList;
     DateTimeFormatter dateFormatter;
     DateTimeFormatter timeFormatter;
+    CalendarController calendarController;
 
-    public TerminalView(TerminalGrid calendarGrid, List<IEvent> eventList, DateTimeFormatter dateFormatter, DateTimeFormatter timeFormatter) {
+    public TerminalView(TerminalGrid calendarGrid, CalendarController calendarController, DateTimeFormatter dateFormatter, DateTimeFormatter timeFormatter) {
         this.calendarGrid = calendarGrid;
-        this.eventList = eventList;
+        this.calendarController = calendarController;
         this.dateFormatter = dateFormatter;
         this.timeFormatter = timeFormatter;
     }
@@ -49,15 +50,15 @@ public class TerminalView {
 
         //day
         for (int i = 0; i < 7; i++) {
-            days[i] = LocalDate.now()
+            days[i] = calendarController.getViewDate()
                     .plusDays(i)
                     .format(dateFormatter);
         }
 
-        for ( IEvent event : eventList) {
+        for ( IEvent event : calendarController.getEventsList()) {
             LocalDate startDate = event.getStartDate();
-            LocalDate startWeekDate = LocalDate.now();
-            LocalDate endWeekDate = LocalDate.now().plusDays(6);
+            LocalDate startWeekDate = calendarController.getViewDate();
+            LocalDate endWeekDate = calendarController.getViewDate().plusDays(6);
             StringBuilder stringBuilder = new StringBuilder();
 
             if (startDate.isAfter(startWeekDate.minusDays(1)) && startDate.isBefore(endWeekDate.plusDays(1))) {
