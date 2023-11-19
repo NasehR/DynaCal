@@ -18,20 +18,9 @@ import java.util.Map;
 public class Main {
     // TODO:
         // displaying the calendar (Need I18N)      (EASY ())       (NOT DONE)
-        // viewing the calendar (movement wise)     (DIFFICULT??)   (NOT DONE)
         // Internationalisation (Spanish ...)       (MEDIUM ())     (NOT DONE)
         // Documentation                            (EASY (0))      (NOT DONE)
 
-    // MODEL (M)
-        // - All the events                                         (DONE)
-    // VIEW (V)
-        // - Responsible for printing text on the terminal          (DONE)
-        // - User interactions
-    // CONTROLLER (C)
-        // - Handle all the extras (running plugins and scripts)    (DONE)
-        // - calendar navigation (moving)
-
-    // V -> C -> V.
     public static void main(String[] args) {
         if (args.length != 1) {
             throw new ArrayIndexOutOfBoundsException("Incorrect number of arguments provided. The application requires one argument however, " + args.length + "argument/s were provided.");
