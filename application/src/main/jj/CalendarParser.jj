@@ -34,8 +34,8 @@ public class CalendarParser {
         return scripts;
     }
 
-    public static CalendarParser parse(String filename) throws IOException, ParseException {
-        CalendarParser p = new CalendarParser(new FileInputStream(filename));
+    public static CalendarParser parse(String filename, String encoding) throws IOException, ParseException {
+        CalendarParser p = new CalendarParser(new FileInputStream(filename), encoding);
         dsl(p.eventList, p.plugInInfo, p.scripts);
         return p;
     }

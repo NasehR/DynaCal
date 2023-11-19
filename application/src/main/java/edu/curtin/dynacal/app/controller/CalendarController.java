@@ -44,27 +44,25 @@ public class CalendarController implements API {
     }
 
     public void pollTime() {
-        Runnable task = new Runnable() {
-            @Override
-            public void run() {
-                LocalDate currentDate = LocalDate.now();
-                LocalTime currentTime = LocalTime.now();
 
-                List<IEvent> eventsList = eventsModel.getEventsList();
+        Runnable task = () -> {
+            LocalDate currentDate = LocalDate.now();
+            LocalTime currentTime = LocalTime.now();
 
-                eventsList.stream()
-                        .filter((event) -> event.getStartDate()
-                                .equals(currentDate))
-                        .filter((event) -> event.getStartTime()
-                                .isPresent() && event
-                                .getStartTime()
-                                .get()
-                                .getHour() == currentTime.getHour())
-                        .forEach((event) -> handlers
-                                .forEach((handler) -> handler
-                                        .eventStarted(event))
-                        );
-            }
+            List<IEvent> eventsList = eventsModel.getEventsList();
+
+            eventsList.stream()
+                    .filter((event) -> event.getStartDate()
+                            .equals(currentDate))
+                    .filter((event) -> event.getStartTime()
+                            .isPresent() && event
+                            .getStartTime()
+                            .get()
+                            .getHour() == currentTime.getHour())
+                    .forEach((event) -> handlers
+                            .forEach((handler) -> handler
+                                    .eventStarted(event))
+                    );
         };
 
         myThread = new Thread(task);

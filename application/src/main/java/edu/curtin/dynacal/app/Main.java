@@ -9,29 +9,31 @@ import edu.curtin.dynacal.app.view.UIView;
 import edu.curtin.terminalgrid.TerminalGrid;
 import edu.curtin.dynacal.dsl.CalendarParser;
 import edu.curtin.dynacal.dsl.ParseException;
-
+import java.util.Locale;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class Main {
-    // TODO:
-        // displaying the calendar (Need I18N)      (EASY ())       (NOT DONE)
-        // Internationalisation (Spanish ...)       (MEDIUM ())     (NOT DONE)
-        // Documentation                            (EASY (0))      (NOT DONE)
 
     public static void main(String[] args) {
+        // TODO:
+            // Documentation                            (EASY (0))      (NOT DONE)
+        Locale locale = Locale.getDefault();
+        // Locale locale = new Locale("es", "ES");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("bundle", locale);
+
         if (args.length != 1) {
-            throw new ArrayIndexOutOfBoundsException("Incorrect number of arguments provided. The application requires one argument however, " + args.length + "argument/s were provided.");
+            throw new ArrayIndexOutOfBoundsException(resourceBundle.getString("invalid_parameters_1") + args.length + resourceBundle.getString("invalid_parameters_2"));
         }
 
         // Initialising
         CalendarParser p;
         var terminalGrid = TerminalGrid.create();
-        // TODO: Changed later for I18N
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(resourceBundle.getString("date_format"));
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(resourceBundle.getString("time_format"));
         List<IEvent> eventList = List.of();
         Map<String, Map<String, String>> plugInInfo = Map.of();
         List<String> scripts = List.of();
@@ -42,7 +44,15 @@ public class Main {
         UIView uiNavigation;
 
         try {
-            p = CalendarParser.parse(args[0]);
+            String encoding = "UTF-8";
+            if (args[0].contains(".utf16.")) {
+                encoding = "UTF-16";
+            }
+            else if (args[0].contains(".utf32.")) {
+                encoding = "UTF-32";
+            }
+
+            p = CalendarParser.parse(args[0], encoding);
             eventList = p.getEventList();
             plugInInfo = p.getPlugInInfo();
             scripts = p.getScripts();
@@ -86,7 +96,7 @@ public class Main {
             System.out.print("\033[H\033[2J");
             System.out.flush();
 
-            System.out.println("Welcome to DYNACAL");
+            System.out.println(resourceBundle.getString("welcome"));
             terminalView.print();
             uiNavigation.move();
         }
