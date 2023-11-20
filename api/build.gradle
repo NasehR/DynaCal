@@ -8,6 +8,11 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
 compileJava {
     options.compilerArgs << "-Xlint:all,-serial"
 }
@@ -18,4 +23,9 @@ pmd {
     rulesMinimumPriority = 5
     ruleSets = []
     ruleSetFiles = files('saed-pmd-rules.xml')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
 }
