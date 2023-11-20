@@ -15,6 +15,8 @@ dependencies {
     implementation project (':api')
     implementation project (':calplugins-repeat')
     implementation project (':calplugins-notify')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 application {
@@ -36,4 +38,9 @@ compileJavacc {
 
 run {
     standardInput = System.in
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
 }
