@@ -16,15 +16,15 @@ public class UIView {
         this.terminalView = terminalView;
 
         navigation = new HashMap<>();
-         navigation.put("+d", new AddDayStrategy());
-         navigation.put("+w", new AddWeekStrategy());
-         navigation.put("+m", new AddMonthStrategy());
-         navigation.put("+y", new AddYearStrategy());
-         navigation.put("-d", new TakeDayStrategy());
-         navigation.put("-w", new TakeWeekStrategy());
-         navigation.put("-m", new TakeMonthStrategy());
-         navigation.put("-y", new TakeYearStrategy());
-         navigation.put("t", new TodayStrategy());
+        navigation.put("+d", new AddDayStrategy());
+        navigation.put("+w", new AddWeekStrategy());
+        navigation.put("+m", new AddMonthStrategy());
+        navigation.put("+y", new AddYearStrategy());
+        navigation.put("-d", new TakeDayStrategy());
+        navigation.put("-w", new TakeWeekStrategy());
+        navigation.put("-m", new TakeMonthStrategy());
+        navigation.put("-y", new TakeYearStrategy());
+        navigation.put("t", new TodayStrategy());
     }
 
     public void move(){
@@ -44,8 +44,17 @@ public class UIView {
                     System.out.println("Exiting the Program.");
                     calendarController.stopTime();
                 }
+                else if (input.equals("search")) {
+                    System.out.println("Search for an event.");
+                }
                 else {
                     System.out.println("Not a valid input.");
+                    System.out.println("The valid commands are:");
+                    for (String key : navigation.keySet()) {
+                        System.out.println("\t" + key + "\t:\t" + navigation.get(key).toString());
+                    }
+                    System.out.println("\tsearch\t:\tTo search for an event.");
+                    System.out.println("\tquit\t:\tTo exit the program.");
                 }
             } while(!(input.equals("quit")));
         }
