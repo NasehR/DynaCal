@@ -9,8 +9,11 @@ import java.util.Scanner;
 public class UIView {
     private final Map<String, IDateStrategy> navigation;
     private CalendarController calendarController;
-    public UIView(CalendarController calendarController) {
+    private TerminalView terminalView;
+
+    public UIView(CalendarController calendarController, TerminalView terminalView) {
         this.calendarController = calendarController;
+        this.terminalView = terminalView;
 
         navigation = new HashMap<>();
          navigation.put("+d", new AddDayStrategy());
@@ -26,20 +29,25 @@ public class UIView {
 
     public void move(){
         try (Scanner scanner = new Scanner(System.in)) {
-            String input = scanner.nextLine();
+            String input = "";
+            do {
+                terminalView.print();
+                input = scanner.nextLine();
+                System.out.println("Input: " + input);
 
-            if (navigation.containsKey(input)) {
-                LocalDate currentDate = calendarController.getViewDate();
-                LocalDate newDate = navigation.get(input).moveToNewDate(currentDate);
-                calendarController.setViewDate(newDate);
-            }
-            else if (input.equals("quit")) {
-                System.out.println("Exit Program.");
-                calendarController.stopTime();
-            }
-            else {
-                System.out.println("Not a valid input.");
-            }
+                if (navigation.containsKey(input)) {
+                    LocalDate currentDate = calendarController.getViewDate();
+                    LocalDate newDate = navigation.get(input).moveToNewDate(currentDate);
+                    calendarController.setViewDate(newDate);
+                }
+                else if (input.equals("quit")) {
+                    System.out.println("Exiting the Program.");
+                    calendarController.stopTime();
+                }
+                else {
+                    System.out.println("Not a valid input.");
+                }
+            } while(!(input.equals("quit")));
         }
     }
 }

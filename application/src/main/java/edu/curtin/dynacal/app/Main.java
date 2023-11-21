@@ -56,25 +56,6 @@ public class Main {
             eventList = p.getEventList();
             plugInInfo = p.getPlugInInfo();
             scripts = p.getScripts();
-
-            /*
-            for ( IEvent event: eventList ) {
-                System.out.println(event.getName());
-                System.out.println(event.getStartDate());
-            }
-
-            for (var keyValuePair: plugInInfo.entrySet()) {
-                System.out.println(keyValuePair.getKey() + ":");
-                for (var keyValuePair1: keyValuePair.getValue().entrySet()) {
-                    System.out.println("\t" + keyValuePair1.getKey() + ": " + keyValuePair1.getValue());
-                }
-            }
-
-            for ( String script: scripts ) {
-                System.out.println(script);
-            }
-             */
-
         }
         catch (ParseException parseException) {
             System.out.println(parseException.toString());
@@ -87,18 +68,15 @@ public class Main {
         calendarController = new CalendarController(eventsModel);
         extraController = new ExtraController(calendarController, scripts);
         terminalView = new TerminalView(terminalGrid, calendarController, dateFormatter, timeFormatter);
-        uiNavigation = new UIView(calendarController);
+        uiNavigation = new UIView(calendarController, terminalView);
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
 
         calendarController.pollTime();
-        for (int ii = 0; ii < 10; ii++){
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
 
-            System.out.println(resourceBundle.getString("welcome"));
-            terminalView.print();
-            uiNavigation.move();
-        }
+        System.out.println(resourceBundle.getString("welcome"));
+        uiNavigation.move();
     }
 }
