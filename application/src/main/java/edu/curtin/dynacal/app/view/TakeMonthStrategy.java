@@ -8,6 +8,7 @@ public class TakeMonthStrategy implements IDateStrategy {
         return currentViewDate.minusMonths(1);
     }
 
+    @Override
     public String toString() {
         return "Move Backwards a Month";
     }

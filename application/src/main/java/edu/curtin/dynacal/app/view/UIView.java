@@ -13,11 +13,9 @@ import java.util.Scanner;
 public class UIView {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_RESET = "\u001B[0m";
-
     private final Map<String, IDateStrategy> navigation;
     private CalendarController calendarController;
     private TerminalView terminalView;
-    Scanner scanner;
 
     public UIView(CalendarController calendarController, TerminalView terminalView) {
         this.calendarController = calendarController;
@@ -36,8 +34,8 @@ public class UIView {
     }
 
     public void move(){
-        try (Scanner scanner = new Scanner(System.in)) {
-            String input = "";
+        try (Scanner scanner = new Scanner(System.in)) {;
+            String input;
             do {
                 terminalView.print();
                 input = scanner.nextLine();

@@ -9,9 +9,9 @@ import java.time.format.DateTimeFormatter;
 public class TerminalView {
 
     private TerminalGrid calendarGrid;
-    DateTimeFormatter dateFormatter;
-    DateTimeFormatter timeFormatter;
-    CalendarController calendarController;
+    /* default */ DateTimeFormatter dateFormatter;
+    /* default */ DateTimeFormatter timeFormatter;
+    /* default */ CalendarController calendarController;
 
     public TerminalView(TerminalGrid calendarGrid, CalendarController calendarController, DateTimeFormatter dateFormatter, DateTimeFormatter timeFormatter) {
         this.calendarGrid = calendarGrid;
