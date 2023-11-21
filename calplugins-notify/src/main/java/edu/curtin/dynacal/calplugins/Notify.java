@@ -2,8 +2,6 @@ package edu.curtin.dynacal.calplugins;
 
 import edu.curtin.dynacal.api.API;
 import edu.curtin.dynacal.api.ICalendarPlugin;
-import edu.curtin.dynacal.api.IEventHandler;
-
 import javax.swing.JOptionPane;
 import java.util.Map;
 

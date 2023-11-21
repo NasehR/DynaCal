@@ -2,9 +2,8 @@ package edu.curtin.dynacal.app.controller;
 
 import edu.curtin.dynacal.api.API;
 import edu.curtin.dynacal.api.ICalendarPlugin;
-import edu.curtin.dynacal.api.IEvent;
+import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +42,14 @@ public class ExtraController {
 
     public void runScripts() {
         for (String script: scriptsList) {
-            PythonInterpreter interpreter = new PythonInterpreter();
+            try (PythonInterpreter interpreter = new PythonInterpreter()) {
+                interpreter.set("calendar", this.api);
 
-            interpreter.set("calendar", this.api);
-
-            interpreter.exec(script);
+                interpreter.exec(script);
+            }
+            catch (PyException exception) {
+                System.out.println(exception.toString());
+            }
         }
     }
 }
