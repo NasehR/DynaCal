@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class RepeatTest {
     @Test
@@ -21,7 +22,7 @@ public class RepeatTest {
 
         Map<String, String> parameters = new HashMap<>();
 
-        parameters.put("title", "Test");
+        parameters.put("title", "Test Event");
         parameters.put("startDate", LocalDate.now().format(dateFormatter));
         parameters.put("repeat", "7");
 
@@ -29,6 +30,12 @@ public class RepeatTest {
 
         assert(api.getRegisteredEvent() != null);
         assertEquals(53, api.getRegisteredEvents().size());
+
+        IEvent event = api.getRegisteredEvents().get(0);
+        assertEquals(event.getName(), "Test Event 0");
+        assertEquals(event.getStartDate(), LocalDate.now());
+        assertFalse(event.getStartTime().isPresent());
+        assertFalse(event.getDuration().isPresent());
     }
 
     private static class APIMock implements API {
