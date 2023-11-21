@@ -3,17 +3,15 @@ package edu.curtin.dynacal.app.view;
 import edu.curtin.dynacal.api.IEvent;
 import edu.curtin.dynacal.app.controller.CalendarController;
 import edu.curtin.terminalgrid.TerminalGrid;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class TerminalView {
 
     private TerminalGrid calendarGrid;
-    DateTimeFormatter dateFormatter;
-    DateTimeFormatter timeFormatter;
-    CalendarController calendarController;
+    /* default */ DateTimeFormatter dateFormatter;
+    /* default */ DateTimeFormatter timeFormatter;
+    /* default */ CalendarController calendarController;
 
     public TerminalView(TerminalGrid calendarGrid, CalendarController calendarController, DateTimeFormatter dateFormatter, DateTimeFormatter timeFormatter) {
         this.calendarGrid = calendarGrid;
@@ -37,7 +35,7 @@ public class TerminalView {
 
         //time
         for (int i = 0; i < 25; i++) {
-            String time = "";
+            String time;
             if (i == 0) {
                 time = "All-Day";
             } else if (i - 1 < 10) {

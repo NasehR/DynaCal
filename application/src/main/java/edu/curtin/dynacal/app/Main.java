@@ -76,11 +76,11 @@ public class Main {
              */
 
         }
-        catch (ParseException exception) {
-            System.out.println(exception.toString());
+        catch (ParseException parseException) {
+            System.out.println(parseException.toString());
         }
-        catch (IOException exception) {
-            System.out.println(exception.toString());
+        catch (IOException ioException) {
+            System.out.println(ioException.toString());
         }
 
         eventsModel = new EventsModel(eventList);

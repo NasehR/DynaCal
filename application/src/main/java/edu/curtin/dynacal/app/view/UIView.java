@@ -1,7 +1,6 @@
 package edu.curtin.dynacal.app.view;
 
 import edu.curtin.dynacal.app.controller.CalendarController;
-
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,20 +25,21 @@ public class UIView {
     }
 
     public void move(){
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+        try (Scanner scanner = new Scanner(System.in)) {
+            String input = scanner.nextLine();
 
-        if (navigation.containsKey(input)) {
-            LocalDate currentDate = calendarController.getViewDate();
-            LocalDate newDate = navigation.get(input).moveToNewDate(currentDate);
-            calendarController.setViewDate(newDate);
-        }
-        else if (input.equals("quit")) {
-            System.out.println("Exit Program.");
-            calendarController.stopTime();
-        }
-        else {
-            System.out.println("Not a valid input.");
+            if (navigation.containsKey(input)) {
+                LocalDate currentDate = calendarController.getViewDate();
+                LocalDate newDate = navigation.get(input).moveToNewDate(currentDate);
+                calendarController.setViewDate(newDate);
+            }
+            else if (input.equals("quit")) {
+                System.out.println("Exit Program.");
+                calendarController.stopTime();
+            }
+            else {
+                System.out.println("Not a valid input.");
+            }
         }
     }
 }
