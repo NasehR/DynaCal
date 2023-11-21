@@ -8,8 +8,6 @@ import java.util.Map;
 public class Notify implements ICalendarPlugin {
     @Override
     public void start(API api, Map<String, String> parameters) {
-        System.out.println("Plugin Started");
-
         String text = parameters.get("title");
         api.registerEventHandler((event) -> {
             if (event.getName().equals(text)) {
