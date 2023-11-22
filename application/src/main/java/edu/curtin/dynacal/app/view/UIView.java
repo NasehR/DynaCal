@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * The UIView class represents the user interface for interacting with the calendar application.
+ */
 public class UIView {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_RESET = "\u001B[0m";
@@ -15,6 +18,13 @@ public class UIView {
     private TerminalView terminalView;
     private ResourceBundle resourceBundle;
 
+    /**
+     * Constructs a UIView with the specified calendar controller, terminal view, and resource bundle.
+     *
+     * @param calendarController The calendar controller to interact with the calendar data.
+     * @param terminalView       The terminal view to display the calendar.
+     * @param resourceBundle     The resource bundle for localized strings.
+     */
     public UIView(CalendarController calendarController, TerminalView terminalView, ResourceBundle resourceBundle) {
         this.calendarController = calendarController;
         this.terminalView = terminalView;
@@ -32,8 +42,11 @@ public class UIView {
         navigation.put("t", new TodayStrategy(this.resourceBundle));
     }
 
-    public void move(){
-        try (Scanner scanner = new Scanner(System.in)) {;
+    /**
+     * Moves through the calendar based on user input and performs actions.
+     */
+    public void move() {
+        try (Scanner scanner = new Scanner(System.in)) {
             String input;
             do {
                 terminalView.print();
@@ -46,15 +59,12 @@ public class UIView {
                     LocalDate currentDate = calendarController.getViewDate();
                     LocalDate newDate = navigation.get(input).moveToNewDate(currentDate);
                     calendarController.setViewDate(newDate);
-                }
-                else if (input.equals("quit")) {
+                } else if (input.equals("quit")) {
                     System.out.println(resourceBundle.getString("Exiting_the_Program"));
                     calendarController.stopTime();
-                }
-                else if (input.equals("search")) {
+                } else if (input.equals("search")) {
                     search(scanner);
-                }
-                else {
+                } else {
                     System.out.print("\033[H\033[2J");
                     System.out.flush();
                     System.out.println(ANSI_RED + resourceBundle.getString("Not_a_valid_input"));
@@ -65,10 +75,15 @@ public class UIView {
                     System.out.println("\tsearch\t:\t" + resourceBundle.getString("To_search_for_an_event"));
                     System.out.println("\tquit\t:\t" + resourceBundle.getString("To_exit_the_program") + "\n\n" + ANSI_RESET);
                 }
-            } while(!(input.equals("quit")));
+            } while (!(input.equals("quit")));
         }
     }
 
+    /**
+     * Searches for an event based on user input and displays the result.
+     *
+     * @param scanner The scanner for user input.
+     */
     private void search(Scanner scanner) {
         String event = scanner.nextLine();
         List<IEvent> events = calendarController.getEventsList();
@@ -76,8 +91,7 @@ public class UIView {
 
         if (events.isEmpty()) {
             stringBuilder.append(resourceBundle.getString("No_events_to_search"));
-        }
-        else {
+        } else {
             boolean found = false;
             for (IEvent e : events) {
                 if (e.getName().equals(event) && e.getStartDate().isAfter(LocalDate.now().minusDays(1))) {
@@ -94,6 +108,6 @@ public class UIView {
             }
         }
 
-        JOptionPane.showMessageDialog(null,  stringBuilder.toString());
+        JOptionPane.showMessageDialog(null, stringBuilder.toString());
     }
 }
