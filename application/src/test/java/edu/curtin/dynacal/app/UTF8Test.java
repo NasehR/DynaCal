@@ -7,7 +7,6 @@ import edu.curtin.dynacal.dsl.ParseException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UTF8Test {
@@ -16,14 +15,12 @@ public class UTF8Test {
     public void testParserUTF8() {
         List<IEvent> eventList = List.of();
         Map<String, Map<String, String>> plugInInfo = Map.of();
-        List<String> scripts = List.of();
         CalendarParser p;
 
         try {
             p = CalendarParser.parse("calendar.utf8.cal", "UTF-8");
             eventList = p.getEventList();
             plugInInfo = p.getPlugInInfo();
-            scripts = p.getScripts();
         } catch (ParseException parseException) {
             System.out.println(parseException.toString());
         } catch (IOException ioException) {

@@ -2,7 +2,6 @@ package edu.curtin.dynacal.app.controller;
 
 import edu.curtin.dynacal.api.AllDayCalendarEvent;
 import edu.curtin.dynacal.api.IEvent;
-import edu.curtin.dynacal.api.IEventHandler;
 import edu.curtin.dynacal.app.model.EventsModel;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
