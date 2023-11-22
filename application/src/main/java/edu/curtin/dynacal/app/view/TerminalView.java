@@ -95,11 +95,7 @@ public class TerminalView {
         }
 
         // With custom box-drawing characters (if you must!)
-        calendarGrid.setBoxChars(new TerminalGrid.BoxChars(
-                "\u2502 ", " \u250a ", " \u2502",
-                "\u2500", "\u254c", "\u2500",
-                "\u256d\u2500", "\u2500\u256e", "\u2570\u2500", "\u2500\u256f",
-                "\u2500\u252c\u2500", "\u2500\u2534\u2500", "\u251c\u254c", "\u254c\u2524", "\u254c\u253c\u254c"));
+        calendarGrid.setBoxChars(TerminalGrid.ASCII_BOX_CHARS);
         calendarGrid.print(events, times, days);
     }
 }
