@@ -17,6 +17,6 @@ public class TodayStrategy implements IDateStrategy {
 
     @Override
     public String toString() {
-        return resourceBundle.getString("Move_Backward_a_Year");
+        return resourceBundle.getString("Move_to_Today");
     }
 }

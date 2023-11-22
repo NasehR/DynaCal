@@ -48,7 +48,7 @@ public class UIView {
                     calendarController.setViewDate(newDate);
                 }
                 else if (input.equals("quit")) {
-                    System.out.println("Exiting the Program.");
+                    System.out.println(resourceBundle.getString("Exiting_the_Program"));
                     calendarController.stopTime();
                 }
                 else if (input.equals("search")) {
@@ -57,13 +57,13 @@ public class UIView {
                 else {
                     System.out.print("\033[H\033[2J");
                     System.out.flush();
-                    System.out.println(ANSI_RED + "Not a valid input.");
-                    System.out.println("The valid commands are:");
+                    System.out.println(ANSI_RED + resourceBundle.getString("Not_a_valid_input"));
+                    System.out.println(resourceBundle.getString("The_valid_commands_are"));
                     for (String key : navigation.keySet()) {
                         System.out.println("\t" + key + "\t:\t" + navigation.get(key).toString());
                     }
-                    System.out.println("\tsearch\t:\tTo search for an event.");
-                    System.out.println("\tquit\t:\tTo exit the program.\n\n" + ANSI_RESET);
+                    System.out.println("\tsearch\t:\t" + resourceBundle.getString("To_search_for_an_event"));
+                    System.out.println("\tquit\t:\t" + resourceBundle.getString("To_exit_the_program") + "\n\n" + ANSI_RESET);
                 }
             } while(!(input.equals("quit")));
         }
@@ -75,7 +75,7 @@ public class UIView {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (events.isEmpty()) {
-            stringBuilder.append("No events to search.");
+            stringBuilder.append(resourceBundle.getString("No_events_to_search"));
         }
         else {
             boolean found = false;
@@ -90,7 +90,7 @@ public class UIView {
                 }
             }
             if (!found) {
-                stringBuilder.append("No events found matching the search: ").append(event);
+                stringBuilder.append(resourceBundle.getString("No_events_found_matching_the_search")).append(event);
             }
         }
 
