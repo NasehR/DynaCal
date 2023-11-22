@@ -9,23 +9,25 @@ import edu.curtin.dynacal.app.view.UIView;
 import edu.curtin.terminalgrid.TerminalGrid;
 import edu.curtin.dynacal.dsl.CalendarParser;
 import edu.curtin.dynacal.dsl.ParseException;
-import java.util.Locale;
+
+import java.util.*;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 public class Main {
 
     public static void main(String[] args) {
-        // TODO:
-            // Documentation                            (EASY (0))      (NOT DONE)
-        Locale locale = Locale.getDefault();
-        // Locale locale = new Locale("es", "ES");
+        Map<Integer, Locale> locales = new HashMap<>();
+        locales.put(0, new Locale("en", "AU"));
+        locales.put(1, new Locale("es", "ES"));
+        locales.put(2, new Locale("en", "US"));
+
+        int input = (args.length == 1) ? 0 : Integer.parseInt(args[1]);
+        Locale locale = locales.get(input);
+
         ResourceBundle resourceBundle = ResourceBundle.getBundle("bundle", locale);
 
-        if (args.length != 1) {
+        if (args.length > 2) {
             throw new ArrayIndexOutOfBoundsException(resourceBundle.getString("invalid_parameters_1") + args.length + resourceBundle.getString("invalid_parameters_2"));
         }
 
