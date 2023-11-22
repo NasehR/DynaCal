@@ -5,10 +5,7 @@ import edu.curtin.dynacal.app.controller.CalendarController;
 
 import javax.swing.*;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class UIView {
     public static final String ANSI_RED = "\u001B[31m";
@@ -16,21 +13,23 @@ public class UIView {
     private final Map<String, IDateStrategy> navigation;
     private CalendarController calendarController;
     private TerminalView terminalView;
+    private ResourceBundle resourceBundle;
 
-    public UIView(CalendarController calendarController, TerminalView terminalView) {
+    public UIView(CalendarController calendarController, TerminalView terminalView, ResourceBundle resourceBundle) {
         this.calendarController = calendarController;
         this.terminalView = terminalView;
+        this.resourceBundle = resourceBundle;
 
         navigation = new HashMap<>();
-        navigation.put("+d", new AddDayStrategy());
-        navigation.put("+w", new AddWeekStrategy());
-        navigation.put("+m", new AddMonthStrategy());
-        navigation.put("+y", new AddYearStrategy());
-        navigation.put("-d", new TakeDayStrategy());
-        navigation.put("-w", new TakeWeekStrategy());
-        navigation.put("-m", new TakeMonthStrategy());
-        navigation.put("-y", new TakeYearStrategy());
-        navigation.put("t", new TodayStrategy());
+        navigation.put("+d", new AddDayStrategy(this.resourceBundle));
+        navigation.put("+w", new AddWeekStrategy(this.resourceBundle));
+        navigation.put("+m", new AddMonthStrategy(this.resourceBundle));
+        navigation.put("+y", new AddYearStrategy(this.resourceBundle));
+        navigation.put("-d", new TakeDayStrategy(this.resourceBundle));
+        navigation.put("-w", new TakeWeekStrategy(this.resourceBundle));
+        navigation.put("-m", new TakeMonthStrategy(this.resourceBundle));
+        navigation.put("-y", new TakeYearStrategy(this.resourceBundle));
+        navigation.put("t", new TodayStrategy(this.resourceBundle));
     }
 
     public void move(){

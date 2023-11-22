@@ -1,8 +1,15 @@
 package edu.curtin.dynacal.app.view;
 
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
 public class TakeWeekStrategy implements IDateStrategy {
+    private ResourceBundle resourceBundle;
+
+    public TakeWeekStrategy(ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
+    }
+
     @Override
     public LocalDate moveToNewDate(LocalDate currentViewDate) {
         return currentViewDate.minusWeeks(1);
@@ -10,6 +17,6 @@ public class TakeWeekStrategy implements IDateStrategy {
 
     @Override
     public String toString() {
-        return "Move Backwards a Week";
+        return resourceBundle.getString("Move_Backward_a_Week");
     }
 }

@@ -68,7 +68,7 @@ public class Main {
         calendarController = new CalendarController(eventsModel);
         extraController = new ExtraController(calendarController, scripts);
         terminalView = new TerminalView(terminalGrid, calendarController, dateFormatter, timeFormatter);
-        uiNavigation = new UIView(calendarController, terminalView);
+        uiNavigation = new UIView(calendarController, terminalView, resourceBundle);
         extraController.initalisePlugins(plugInInfo);
         extraController.runScripts();
 

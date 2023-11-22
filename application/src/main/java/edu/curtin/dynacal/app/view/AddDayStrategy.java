@@ -1,8 +1,15 @@
 package edu.curtin.dynacal.app.view;
 
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
 public class AddDayStrategy implements IDateStrategy{
+
+    private ResourceBundle resourceBundle;
+
+    public AddDayStrategy(ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
+    }
 
     @Override
     public LocalDate moveToNewDate(LocalDate currentViewDate) {
@@ -10,6 +17,6 @@ public class AddDayStrategy implements IDateStrategy{
     }
     @Override
     public String toString() {
-        return "Move Forward a Day";
+        return resourceBundle.getString("Move_Forward_a_Day");
     }
 }
