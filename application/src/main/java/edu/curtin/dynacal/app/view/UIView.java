@@ -39,7 +39,9 @@ public class UIView {
             do {
                 terminalView.print();
                 input = scanner.nextLine();
-                System.out.println("Input: " + input);
+
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
 
                 if (navigation.containsKey(input)) {
                     LocalDate currentDate = calendarController.getViewDate();
@@ -54,6 +56,8 @@ public class UIView {
                     search(scanner);
                 }
                 else {
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
                     System.out.println(ANSI_RED + "Not a valid input.");
                     System.out.println("The valid commands are:");
                     for (String key : navigation.keySet()) {
@@ -67,9 +71,7 @@ public class UIView {
     }
 
     private void search(Scanner scanner) {
-        System.out.println("Search for an event.");
         String event = scanner.nextLine();
-        System.out.println("Searching for: " + event);
         List<IEvent> events = calendarController.getEventsList();
         StringBuilder stringBuilder = new StringBuilder();
 
