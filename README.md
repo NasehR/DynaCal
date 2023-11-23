@@ -1,6 +1,6 @@
 # DYNACAL
 
-A Java-based calendar application. The application reads a specially formatted calendar file, displaying and navigating events within a seven-day period from the current date. The user interface (terminal) is internationalized, supporting various locales. The application dynamically load plugins and run scripts specified in the calendar file, allowing the user to extend functionality. Code quality is ensured via the use of PMD, and the calendar file follows a domain-specific language. The project structure includes Gradle for building, with separate subprojects for the core application, API declarations, and plugins. 
+A Gradle Java-based calendar application. 
 
 ## Table of Contents
 
@@ -54,12 +54,12 @@ The application reads a specially formatted calendar file, displaying and naviga
 |       |-- main
 |       |   |-- java
 |       |       |-- edu.curtin.dynacal.calplugins.notify
-|       |           |-- NotifyPlugin.java
+|       |           |-- Notify.java
 |       |
 |       |-- test
 |           |-- java
 |               |-- edu.curtin.dynacal.calplugins.notify
-|                   |-- NotifyPluginTest.java
+|                   |-- NotifyTest.java
 |
 |-- calplugins-repeat
 |   |-- build.gradle
