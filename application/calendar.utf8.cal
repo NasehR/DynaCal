@@ -20,5 +20,26 @@ plugin edu.curtin.dynacal.calplugins.Repeat {
 
 script "
 # I'm a Python script!
-print(""hello world"")
+from edu.curtin.dynacal.api import IEvent, AllDayCalendarEvent, TODCalendarEvent
+from datetime import date
+import json
+
+def load_events_from_json(file_path):
+    with open(file_path, 'r') as f:
+        events = json.load(f)
+    return events
+
+def main():
+    events_from_file = load_events_from_json('publicEvents.json')
+    print(events_from_file[0].keys()[0])
+
+    for file_event in events_from_file:
+        if file_event.keys() == 2:
+            d = date(file_event["date"].split(':')[0], file_event["d"].split(':')[1], file_event["d"].split(':')[2])
+            event = AllDayCalendarEvent(file_event["name"], d)
+            print(event.getName())
+            api.registerEvent(event)
+
+if __name__ == '__main__':
+    main()
 "

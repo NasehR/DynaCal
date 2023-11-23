@@ -1,0 +1,42 @@
+[
+  {
+    "name": "New Year's Day",
+    "d": "2023-01-01"
+  },
+  {
+    "name": "Australia Day",
+    "d": "2023-01-26"
+  },
+  {
+    "name": "Labour Day",
+    "d": "2023-03-06"
+  },
+  {
+    "name": "Good Friday",
+    "d": "2023-04-07"
+  },
+  {
+    "name": "Easter Monday",
+    "d": "2023-04-10"
+  },
+  {
+    "name": "ANZAC Day",
+    "d": "2023-04-25"
+  },
+  {
+    "name": "Western Australia Day",
+    "d": "2023-06-05"
+  },
+  {
+    "name": "Queen's Birthday",
+    "d": "2023-10-02"
+  },
+  {
+    "name": "Christmas Day",
+    "d": "2023-12-25"
+  },
+  {
+    "name": "Boxing Day",
+    "d": "2023-12-26"
+  }
+]
